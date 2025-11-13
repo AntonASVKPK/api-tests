@@ -1,0 +1,17 @@
+# Создайте файл .gitignore в корневой папке
+echo "__pycache__/
+.pytest_cache/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+.env
+report.html
+*.log
+.DS_Store
+.coverage
+htmlcov/
+" > .gitignore
