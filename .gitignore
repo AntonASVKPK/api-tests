@@ -1,5 +1,4 @@
-# Создайте файл .gitignore в корневой папке
-echo "__pycache__/
+__pycache__/
 .pytest_cache/
 *.pyc
 *.pyo
@@ -14,4 +13,7 @@ report.html
 .DS_Store
 .coverage
 htmlcov/
-" > .gitignore
+allure-results/
+allure-report/
+.vscode/
+.idea/
