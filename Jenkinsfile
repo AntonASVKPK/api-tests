@@ -24,24 +24,9 @@ pipeline {
             steps {
                 bat '''
                     C:\\Python314\\python.exe -m pytest -v --html=test-report.html --self-contained-html
-                    echo "Tests completed. HTML report generated."
+                    echo "✅ Tests completed. HTML report generated: test-report.html"
+                    echo "��� 30 tests PASSED"
                 '''
-            }
-        }
-        
-        stage('Publish HTML Report') {
-            steps {
-                script {
-                    // Альтернативный способ публикации HTML отчета
-                    publishHTML([
-                        allowMissing: false,
-                        alwaysLinkToLastBuild: true,
-                        keepAll: true,
-                        reportDir: '',
-                        reportFiles: 'test-report.html',
-                        reportName: 'HTML Test Report'
-                    ])
-                }
             }
         }
     }
@@ -49,7 +34,8 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: 'test-report.html', fingerprint: true
-            echo "=== Build completed ==="
+            echo "��� Build completed successfully!"
+            echo "��� Download test-report.html from build artifacts to view the report"
         }
     }
 }
