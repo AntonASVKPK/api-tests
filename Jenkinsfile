@@ -8,33 +8,28 @@ pipeline {
             }
         }
         
-        stage('Verify Environment') {
+        stage('Setup Python') {
             steps {
                 bat '''
-                    echo "Checking Python installation..."
-                    python --version
-                    pip --version
-                    echo "Environment ready!"
+                    echo "Setting up Python..."
+                    where python
+                    where py
+                    C:\\Python312\\python.exe --version
+                    C:\\Python312\\Scripts\\pip.exe --version
                 '''
             }
         }
         
         stage('Install Dependencies') {
             steps {
-                bat 'pip install -r requirements.txt'
+                bat 'C:\\Python312\\Scripts\\pip.exe install -r requirements.txt'
             }
         }
         
         stage('Run Tests') {
             steps {
-                bat 'python -m pytest -v'
+                bat 'C:\\Python312\\python.exe -m pytest -v'
             }
-        }
-    }
-    
-    post {
-        always {
-            echo "=== Build completed ==="
         }
     }
 }
