@@ -10,11 +10,7 @@ pipeline {
         
         stage('Setup Python') {
             steps {
-                bat '''
-                    echo "Using Python 3.14 from C:\\Python314\\"
-                    C:\\Python314\\python.exe --version
-                    C:\\Python314\\Scripts\\pip.exe --version
-                '''
+                bat 'C:\\Python314\\python.exe --version'
             }
         }
         
@@ -24,10 +20,26 @@ pipeline {
             }
         }
         
-        stage('Run Tests') {
+        stage('Run Tests with HTML Report') {
             steps {
-                bat 'C:\\Python314\\python.exe -m pytest -v'
+                bat '''
+                    C:\\Python314\\python.exe -m pytest -v --html=report.html --self-contained-html
+                '''
             }
+        }
+    }
+    
+    post {
+        always {
+            publishHTML([
+                allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: '',
+                reportFiles: 'report.html',
+                reportName: 'HTML Test Report'
+            ])
+            echo "=== Build with HTML report completed ==="
         }
     }
 }
