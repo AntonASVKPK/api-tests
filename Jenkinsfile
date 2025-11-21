@@ -23,23 +23,33 @@ pipeline {
         stage('Run Tests with HTML Report') {
             steps {
                 bat '''
-                    C:\\Python314\\python.exe -m pytest -v --html=report.html --self-contained-html
+                    C:\\Python314\\python.exe -m pytest -v --html=test-report.html --self-contained-html
+                    echo "Tests completed. HTML report generated."
                 '''
+            }
+        }
+        
+        stage('Publish HTML Report') {
+            steps {
+                script {
+                    // Альтернативный способ публикации HTML отчета
+                    publishHTML([
+                        allowMissing: false,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: '',
+                        reportFiles: 'test-report.html',
+                        reportName: 'HTML Test Report'
+                    ])
+                }
             }
         }
     }
     
     post {
         always {
-            publishHTML([
-                allowMissing: false,
-                alwaysLinkToLastBuild: true,
-                keepAll: true,
-                reportDir: '',
-                reportFiles: 'report.html',
-                reportName: 'HTML Test Report'
-            ])
-            echo "=== Build with HTML report completed ==="
+            archiveArtifacts artifacts: 'test-report.html', fingerprint: true
+            echo "=== Build completed ==="
         }
     }
 }
