@@ -11,24 +11,22 @@ pipeline {
         stage('Setup Python') {
             steps {
                 bat '''
-                    echo "Setting up Python..."
-                    where python
-                    where py
-                    C:\\Python312\\python.exe --version
-                    C:\\Python312\\Scripts\\pip.exe --version
+                    echo "Using Python 3.14 from C:\\Python314\\"
+                    C:\\Python314\\python.exe --version
+                    C:\\Python314\\Scripts\\pip.exe --version
                 '''
             }
         }
         
         stage('Install Dependencies') {
             steps {
-                bat 'C:\\Python312\\Scripts\\pip.exe install -r requirements.txt'
+                bat 'C:\\Python314\\Scripts\\pip.exe install -r requirements.txt'
             }
         }
         
         stage('Run Tests') {
             steps {
-                bat 'C:\\Python312\\python.exe -m pytest -v'
+                bat 'C:\\Python314\\python.exe -m pytest -v'
             }
         }
     }
