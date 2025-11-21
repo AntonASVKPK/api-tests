@@ -10,34 +10,19 @@ pipeline {
         
         stage('Setup Python') {
             steps {
-                bat 'python --version'
-                bat 'pip --version'
+                bat 'C:\\Users\\Антон\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe --version'
             }
         }
         
         stage('Install Dependencies') {
             steps {
-                bat 'pip install -r requirements.txt'
+                bat 'C:\\Users\\Антон\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe -m pip install -r requirements.txt'
             }
         }
         
         stage('Run Tests') {
             steps {
-                bat 'python -m pytest --alluredir=allure-results -v'
-            }
-        }
-        
-        stage('Generate Allure Report') {
-            steps {
-                script {
-                    allure([
-                        includeProperties: false,
-                        jdk: '',
-                        properties: [],
-                        reportBuildPolicy: 'ALWAYS',
-                        results: [[path: 'allure-results']]
-                    ])
-                }
+                bat 'C:\\Users\\Антон\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe -m pytest -v'
             }
         }
     }
